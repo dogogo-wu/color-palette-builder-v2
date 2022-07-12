@@ -1,41 +1,74 @@
 <template>
-  <div>
-    <p>Pick a base color!</p>
-    <input class="mypicker" type="color" v-model="mycolor" @change="passColor"/>
-    <v-text-field v-model="mycolor" @change="passColor"></v-text-field>
+  <div class="picker-container">
+    <div class="text-h6 mb-3">Pick a base color!</div>
+    <input
+      class="mypicker"
+      type="color"
+      v-model="mycolor"
+      @change="passColor"
+    />
+    <v-text-field
+      v-model="mycolor"
+      @change="passColor"
+      class="picker-text"
+    ></v-text-field>
   </div>
 </template>
 
 <script>
 export default {
-    props: ['pickColor', 'id'],
-    data() {
-        return {
-            mycolor: this.pickColor
-        }
+  props: ["pickColor", "id"],
+  data() {
+    return {
+      mycolor: this.pickColor,
+    };
+  },
+  methods: {
+    passColor() {
+      this.$emit("color", this.mycolor, this.id);
     },
-    methods: {
-        passColor() {
-            this.$emit('color', this.mycolor, this.id)
-        }
-    },
+  },
 };
 </script>
 
 <style lang="scss">
+
+$cir-dia: 80px;
+
+.picker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #ddd;
+
+  .picker-text {
+    width: $cir-dia;
+    input {
+      text-align: center;
+    }
+  }
+}
 .mypicker {
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
+  width: $cir-dia;
+  height: $cir-dia;
   border: none;
   cursor: pointer;
+  padding: 0;
 
   &::-webkit-color-swatch {
-    border-radius: 50px;
+    border-radius: $cir-dia;
     border: none;
+    padding: 0;
   }
+  &::-webkit-color-swatch-wrapper {
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+}
   &::-moz-color-swatch {
-    border-radius: 50px;
+    border-radius: $cir-dia;
     border: none;
   }
 }
