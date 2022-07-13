@@ -1,29 +1,37 @@
 <template>
   <v-app>
+    <header class="myheader text-h5 text-center mb-4 py-5 font-weight-bold">
+      Color Palette Builder
+    </header>
     <v-main>
-      <div class="myheader text-h5 text-center mb-4 py-5 font-weight-bold">
-        Color Palette Builder
-      </div>
       <v-container>
         <div class="d-flex justify-space-around flex-wrap">
           <Picker :id="obj1.id" :pickColor="obj1.color" @color="getColor" />
           <Picker :id="obj2.id" :pickColor="obj2.color" @color="getColor" />
         </div>
         <div class="pt-4">
-          <div class="text-h6 text-center">Pick Output Colors</div>
+          <div class="text-h6 text-center">Pick Colors</div>
           <div class="text-center">(Lightness variation)</div>
           <Palette :id="obj1.id" :ary="genAry_1" @result="getResult" />
           <Palette :id="obj2.id" :ary="genAry_2" @result="getResult" />
         </div>
         <div class="pt-4 d-flex flex-column align-center">
-          <div class="text-h6 text-center">Output</div>
+          <div class="text-h6 text-center">Your Color</div>
           <div class="output mb-5">
             <OutColor :bg="obj1.output" />
             <OutColor :bg="obj2.output" />
           </div>
         </div>
+        <div>
+          <RndHex :id="obj1.id" :color="obj1.color" />
+        </div>
       </v-container>
     </v-main>
+    <footer>
+      <div class="myfooter">
+        Copyright © {{ new Date().getFullYear() }} Leon Wu. All rights reserved.
+      </div>
+    </footer>
   </v-app>
 </template>
 
@@ -31,13 +39,14 @@
 import Picker from "./components/Picker.vue";
 import Palette from "./components/Palette.vue";
 import OutColor from "./components/OutColor.vue";
+import RndHex from "./components/RndHex.vue";
 import hexToHsl from "hex-to-hsl";
 import hslToHex from "hsl-to-hex";
 
 export default {
   name: "App",
 
-  components: { Picker, Palette, OutColor },
+  components: { Picker, Palette, OutColor, RndHex },
 
   data: () => ({
     obj1: {
@@ -108,10 +117,16 @@ export default {
   background-color: #eee;
   color: #555;
 }
-.output{
+.output {
   display: inline-block;
   border-radius: 1rem;
   border: 1px solid #ddd;
+}
+.myfooter {
+  color: #555;
+  background: #eee;
+  text-align: center;
+  padding: 1.5rem;
 }
 </style>>
 

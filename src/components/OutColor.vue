@@ -15,7 +15,7 @@
         height="80px"
       ></v-btn>
     </template>
-    <span>Click to Copy</span>
+    <span>Copy Color (HEX)</span>
   </v-tooltip>
 </template>
 
