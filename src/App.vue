@@ -15,15 +15,19 @@
           <Palette :id="obj1.id" :ary="genAry_1" @result="getResult" />
           <Palette :id="obj2.id" :ary="genAry_2" @result="getResult" />
         </div>
-        <div class="pt-4 d-flex flex-column align-center">
-          <div class="text-h6 text-center">Your Color</div>
+        <div class="out-area pt-3 d-flex flex-column align-center">
+          <div class="text-h6 text-center d-inline-block">Your Color</div>
           <div class="output mb-5">
             <OutColor :bg="obj1.output" />
             <OutColor :bg="obj2.output" />
           </div>
         </div>
-        <div>
-          <RndHex :id="obj1.id" :color="obj1.color" />
+        <div class="pt-4">
+          <div class="text-h6 text-center">Similar Random Colors</div>
+          <div class="hexcolor">
+            <RndHex :id="obj1.id" :color="obj1.color" @result="getResult" />
+            <RndHex :id="obj2.id" :color="obj2.color" @result="getResult" />
+          </div>
         </div>
       </v-container>
     </v-main>
@@ -117,10 +121,18 @@ export default {
   background-color: #eee;
   color: #555;
 }
+.out-area {
+  border-radius: 1rem;
+  border: 2px solid #ccc;
+  width: 300px;
+  margin: 1rem auto;
+}
 .output {
   display: inline-block;
-  border-radius: 1rem;
-  border: 1px solid #ddd;
+}
+.hexcolor{
+  display: flex;
+  justify-content: space-around;
 }
 .myfooter {
   color: #555;

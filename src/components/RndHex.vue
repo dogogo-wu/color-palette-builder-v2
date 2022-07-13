@@ -1,12 +1,17 @@
 <template>
   <div class="hex-container">
-    <div v-for="(item, index) in hexAry" :key="index" style="">
-      <Hexagon
+    <div class="hex-origin">
+      <div
         class="hex-comp"
-        :size="80"
-        :border-size="0"
-        :backgroundColor="item"
-      />
+        v-for="(item, index) in hexAry"
+        :key="index"
+        :style="{
+          transform: `translate(-50%, -50%) translateX(${posAry[index].x}px) translateY(${posAry[index].y}px)`,
+        }"
+        @click="sendOut(item, id)"
+      >
+        <Hexagon :size="90" :border-size="0" :backgroundColor="item" />
+      </div>
     </div>
   </div>
 </template>
@@ -16,28 +21,60 @@ import Hexagon from "@coddicat/vue-hexagon";
 import hexToHsl from "hex-to-hsl";
 import hslToHex from "hsl-to-hex";
 
+const pi = 3.14159;
+
 export default {
   props: ["id", "color"],
   components: { Hexagon },
   data() {
     return {
-      //   hexAry: [],
+      posAry: [],
     };
   },
   methods: {
+    sendOut(outcolor, outid) {
+      this.$emit("result", outcolor, outid);
+    },
     genRndHex(color) {
       var [h, s, v] = hexToHsl(color);
       var hexAry = [];
       hexAry.push(hslToHex(h, s, v));
       for (let i = 0; i < 6; i++) {
         const new_h = h + 10 - Math.random() * 20;
-        const new_s = s + 10 - Math.random() * 40;
-        const new_v = v + 10 - Math.random() * 40;
+        const new_s = s + 20 - Math.random() * 40;
+        const new_v = v + 20 - Math.random() * 40;
 
         hexAry.push(hslToHex(new_h, new_s, new_v));
       }
 
       return hexAry;
+    },
+    degToRad(deg) {
+      return (deg * pi) / 180;
+    },
+    pushToPosAry(x, y) {
+      const pos = { x, y };
+      this.posAry.push(pos);
+    },
+    genHexPos() {
+      var radius = 100;
+      var stepDeg = 60;
+      var deg = 90;
+      var x = 0;
+      var y = 0;
+
+      // init push
+      this.pushToPosAry(x, y);
+
+      // around pos push
+      for (let i = 0; i < 6; i++) {
+        x = Math.round(radius * Math.cos(this.degToRad(deg)) * 100) / 100;
+        y = Math.round(radius * Math.sin(this.degToRad(deg)) * 100) / 100;
+
+        this.pushToPosAry(x, y);
+
+        deg += stepDeg;
+      }
     },
   },
   computed: {
@@ -45,24 +82,26 @@ export default {
       return this.genRndHex(this.color);
     },
   },
+  created() {
+    this.genHexPos();
+  },
 };
 </script>
 
 <style lang="scss">
-$size: 80px;
-$con-hei: 400px;
 .hex-container {
-  height: $con-hei;
-  position: relative;
-  div {
-    display: inline-block;
-    width: $size;
-    height: $size;
-    // position: absolute;
-    // transform: translate(-50%, -50%);
-    // left: 50%;
-    // top: 50%;
+  height: 320px;
+  width: 40%;
 
-  }
+  position: relative;
+}
+.hex-origin {
+  position: relative;
+  left: 50%;
+  top: 50%;
+}
+.hex-comp {
+  display: inline-block;
+  position: absolute;
 }
 </style>
