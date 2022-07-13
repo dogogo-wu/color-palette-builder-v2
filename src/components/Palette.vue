@@ -1,10 +1,6 @@
 <template>
   <div class="palette-container">
-    <!-- <div v-if="colorAry.length">
-        <div v-for="item in colorAry" :key="item" class="singlePalette" :style="{ background: item }"></div>
-    </div> -->
     <div v-for="item in ary" :key="item" class="singlePalette" :style="{ background: item }"></div>
-    <!-- <div class="singlePalette" :style="{ background: color }"></div> -->
   </div>
 </template>
 
@@ -16,10 +12,6 @@ export default {
         return {
             // colorAry: [],
         }
-    },
-    mounted () {
-        console.log("mounted");
-
     },
 }
 

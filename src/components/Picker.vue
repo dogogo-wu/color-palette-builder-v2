@@ -5,11 +5,9 @@
       class="mypicker"
       type="color"
       v-model="mycolor"
-      @change="passColor"
     />
     <v-text-field
       v-model="mycolor"
-      @change="passColor"
       class="picker-text"
     ></v-text-field>
   </div>
@@ -23,10 +21,8 @@ export default {
       mycolor: this.pickColor,
     };
   },
-  methods: {
-    passColor() {
-      this.$emit("color", this.mycolor, this.id);
-    },
+  updated () {
+    this.$emit("color", this.mycolor, this.id);
   },
 };
 </script>
