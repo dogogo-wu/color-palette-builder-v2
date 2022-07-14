@@ -17,6 +17,36 @@
         ></v-switch>
         <v-icon>mdi-weather-night</v-icon>
       </div>
+      <div class="add-btn-dec">
+        <v-fab-transition>
+          <v-btn
+            v-show="!add"
+            color="red"
+            fab
+            dark
+            small
+            outlined
+            @click="add = !add"
+            class="mybtn"
+          >
+            <v-icon>mdi-minus</v-icon>
+          </v-btn>
+        </v-fab-transition>
+        <v-fab-transition>
+          <v-btn
+            v-show="add"
+            color="green"
+            fab
+            dark
+            small
+            outlined
+            @click="add = !add"
+            class="mybtn"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </div>
     </header>
     <v-main>
       <v-container>
@@ -103,6 +133,7 @@ export default {
         output: "#ccc",
       },
     ],
+    add: true,
   }),
   methods: {
     getColor(color, id) {
@@ -126,6 +157,12 @@ export default {
   top: 20px;
   display: flex;
   align-items: center;
+}
+.mybtn{
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  border-width: 2px;
 }
 .mylight {
   background-color: #eee;
