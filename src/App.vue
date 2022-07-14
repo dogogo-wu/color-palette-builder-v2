@@ -71,7 +71,7 @@
             v-for="item in myobj"
             :key="item.id"
             :id="item.id"
-            :pickColor="item.color"
+            :color="item.color"
             @color="getColor"
           />
         </div>
@@ -92,7 +92,11 @@
             class="out-area pt-3 px-4"
             :class="$vuetify.theme.dark ? 'border-dark' : 'border-light'"
           >
-            <div class="text-h6 text-center">Your Color</div>
+            <div class="text-h6 text-center">Your Colors</div>
+            <v-btn icon color="green" class="iter-btn" @click="handleIterClick">
+              <v-icon>mdi-cached</v-icon>
+            </v-btn>
+
             <div class="output mb-5">
               <OutColor
                 v-for="item in myobj"
@@ -176,6 +180,13 @@ export default {
       this.myobj.pop();
       this.add = !this.add;
     },
+    handleIterClick(){
+      this.myobj.forEach(item => {
+        item.color = item.output
+      });
+      console.log(this.myobj[0].color);
+      console.log(this.myobj[1].color);
+    }
   },
 };
 </script>
@@ -237,6 +248,12 @@ export default {
   border: 2px solid;
   display: inline-block;
   margin: 1rem auto;
+  position: relative;
+}
+.iter-btn{
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 .border-light {
   border-color: #ccc;
