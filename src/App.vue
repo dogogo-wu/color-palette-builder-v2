@@ -15,36 +15,52 @@
           hide-details
           class="btn-switch ma-0 pa-0"
         ></v-switch>
-        <v-icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">mdi-weather-night</v-icon>
+        <v-icon @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+          >mdi-weather-night</v-icon
+        >
       </div>
       <div class="add-btn-dec">
         <v-fab-transition>
-          <v-btn
-            v-show="!add"
-            color="red"
-            fab
-            dark
-            small
-            outlined
-            @click="add = !add"
-            class="mybtn"
-          >
-            <v-icon>mdi-minus</v-icon>
-          </v-btn>
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-show="!add"
+                color="blue"
+                fab
+                dark
+                x-small
+                outlined
+                @click="handleDelClick"
+                class="mybtn"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-minus</v-icon>
+              </v-btn>
+            </template>
+            <span>Remove 3rd Color</span>
+          </v-tooltip>
         </v-fab-transition>
         <v-fab-transition>
-          <v-btn
-            v-show="add"
-            color="green"
-            fab
-            dark
-            small
-            outlined
-            @click="add = !add"
-            class="mybtn"
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-show="add"
+                color="green"
+                fab
+                dark
+                x-small
+                outlined
+                @click="handleAddClick"
+                class="mybtn"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <span>Add 3rd Color</span>
+          </v-tooltip>
         </v-fab-transition>
       </div>
     </header>
@@ -134,12 +150,12 @@ export default {
         color: "#ff9900",
         output: "#ccc",
       },
-      // {
-      //   id: 3,
-      //   color: "#55d3c6",
-      //   output: "#ccc",
-      // },
     ],
+    tmpobj: {
+      id: 3,
+      color: "#55d3c6",
+      output: "#ccc",
+    },
     add: true,
   }),
   methods: {
@@ -148,6 +164,17 @@ export default {
     },
     getResult(outcome, id) {
       this.myobj[id - 1].output = outcome;
+    },
+    handleAddClick() {
+      this.myobj.push(this.tmpobj);
+      this.add = !this.add;
+    },
+    handleDelClick() {
+      this.tmpobj.color = this.myobj[2].color;
+      this.tmpobj.ouput = this.myobj[2].ouput;
+
+      this.myobj.pop();
+      this.add = !this.add;
     },
   },
 };
@@ -165,18 +192,29 @@ export default {
   display: flex;
   align-items: center;
 }
-.mybtn{
+.mybtn {
   position: absolute;
-  left: 16px;
-  top: 16px;
+  left: 20px;
+  top: 20px;
   border-width: 2px;
 }
-@media (max-width:500px) {
-  .btn-switch{
+@media (max-width: 500px) {
+  .btn-switch {
     display: none;
   }
-  .switch-group{
+  .switch-group {
     right: 10px;
+  }
+  .mybtn {
+    left: 10px;
+  }
+}
+@media (max-width: 350px) {
+  .switch-group {
+    right: 5px;
+  }
+  .mybtn {
+    left: 5px;
   }
 }
 .mylight {
@@ -187,7 +225,7 @@ export default {
   background-color: #333;
   color: #eee;
 }
-.out-sec{
+.out-sec {
   display: flex;
   justify-content: center;
   /* position: fixed;
@@ -199,7 +237,6 @@ export default {
   border: 2px solid;
   display: inline-block;
   margin: 1rem auto;
-  
 }
 .border-light {
   border-color: #ccc;
@@ -216,7 +253,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  
 }
 .myfooter {
   text-align: center;
@@ -225,7 +261,7 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
 }
-.myfooter p{
+.myfooter p {
   margin: 0;
 }
 </style>>
