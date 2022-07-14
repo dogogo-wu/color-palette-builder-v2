@@ -1,7 +1,22 @@
 <template>
   <v-app>
-    <header class="myheader text-h5 text-center mb-4 py-5 font-weight-bold">
-      Color Palette Builder
+    <header
+      class="myheader mb-4 py-5"
+      :class="$vuetify.theme.dark ? 'mydark' : 'mylight'"
+    >
+      <div class="text-h5 text-center font-weight-bold">
+        Color Palette Builder
+      </div>
+      <div class="switch-group">
+        <v-switch
+          v-model="$vuetify.theme.dark"
+          inset
+          label=""
+          hide-details
+          class="ma-0"
+        ></v-switch>
+        <v-icon>mdi-weather-night</v-icon>
+      </div>
     </header>
     <v-main>
       <v-container>
@@ -27,7 +42,10 @@
         </div>
 
         <div class="d-flex justify-center">
-          <div class="out-area pt-3">
+          <div
+            class="out-area pt-3 px-4"
+            :class="$vuetify.theme.dark ? 'border-dark' : 'border-light'"
+          >
             <div class="text-h6 text-center">Your Color</div>
             <div class="output mb-5">
               <OutColor
@@ -54,7 +72,7 @@
       </v-container>
     </v-main>
     <footer>
-      <div class="myfooter">
+      <div class="myfooter" :class="$vuetify.theme.dark ? 'mydark' : 'mylight'">
         Copyright © {{ new Date().getFullYear() }} Leon Wu. All rights reserved.
       </div>
     </footer>
@@ -84,11 +102,6 @@ export default {
         color: "#ff7300",
         output: "#ccc",
       },
-      // {
-      //   id: 3,
-      //   color: "#ff73ff",
-      //   output: "#ccc",
-      // },
     ],
   }),
   methods: {
@@ -104,14 +117,35 @@ export default {
 
 <style>
 .myheader {
+  position: relative;
+}
+.switch-group {
+  position: absolute;
+  margin: 0;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+}
+.mylight {
   background-color: #eee;
   color: #555;
 }
+.mydark {
+  background-color: #333;
+  color: #eee;
+}
 .out-area {
   border-radius: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid;
   display: inline-block;
   margin: 1rem auto;
+}
+.border-light {
+  border-color: #ccc;
+}
+.border-dark {
+  border-color: #777;
 }
 .output {
   display: inline-block;
@@ -121,8 +155,6 @@ export default {
   justify-content: space-around;
 }
 .myfooter {
-  color: #555;
-  background: #eee;
   text-align: center;
   padding: 1.5rem;
 }
