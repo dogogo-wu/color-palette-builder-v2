@@ -10,7 +10,7 @@
         }"
         @click="sendOut(item, id)"
       >
-        <Hexagon :size="90" :border-size="0" :backgroundColor="item" />
+        <Hexagon :size="90" :border-size="0" :backgroundColor="item" v-ripple />
       </div>
     </div>
   </div>
@@ -35,18 +35,18 @@ export default {
     sendOut(outcolor, outid) {
       this.$emit("result", outcolor, outid);
     },
-    gneRndNum(lower, upper){
+    gneRndNum(lower, upper) {
       const range = upper - lower;
-      return lower + Math.random() * range
+      return lower + Math.random() * range;
     },
     genRndHex(color) {
       var [h, s, v] = hexToHsl(color);
       var hexAry = [];
       hexAry.push(hslToHex(h, s, v));
       for (let i = 0; i < 6; i++) {
-        const new_h = h + this.gneRndNum(-10,10);
-        const new_s = s + this.gneRndNum(-20,20);
-        const new_v = v + this.gneRndNum(-20,20);
+        const new_h = h + this.gneRndNum(-10, 10);
+        const new_s = s + this.gneRndNum(-20, 20);
+        const new_v = v + this.gneRndNum(-20, 20);
 
         hexAry.push(hslToHex(new_h, new_s, new_v));
       }
@@ -93,8 +93,8 @@ export default {
 
 <style>
 .hex-container {
-  height: 320px;
-  width: 40%;
+  height: 300px;
+  width: 300px;
 
   position: relative;
 }
@@ -106,5 +106,8 @@ export default {
 .hex-comp {
   display: inline-block;
   position: absolute;
+}
+.hex-comp, .hex-comp div{
+  border-radius: 90px;
 }
 </style>
