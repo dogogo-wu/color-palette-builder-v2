@@ -5,7 +5,7 @@
       :class="$vuetify.theme.dark ? 'mydark' : 'mylight'"
     >
       <div class="text-h5 text-center font-weight-bold">
-        Color Palette Builder
+        Color Palette for Design
       </div>
       <div class="switch-group">
         <v-switch
@@ -73,6 +73,7 @@
             :id="item.id"
             :color="item.color"
             @color="getColor"
+            :iter="iter"
           />
         </div>
         <div class="pt-2">
@@ -92,10 +93,22 @@
             class="out-area pt-3 px-4"
             :class="$vuetify.theme.dark ? 'border-dark' : 'border-light'"
           >
-            <div class="text-h6 text-center">Your Colors</div>
-            <v-btn icon color="green" class="iter-btn" @click="handleIterClick">
-              <v-icon>mdi-cached</v-icon>
-            </v-btn>
+            <div class="text-h6 text-center">Your Design Colors</div>
+            <v-tooltip right>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  color="green"
+                  class="iter-btn"
+                  @click="handleIterClick"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-cached</v-icon>
+                </v-btn>
+              </template>
+              <span>Iterate Colors</span>
+            </v-tooltip>
 
             <div class="output mb-5">
               <OutColor
@@ -161,6 +174,7 @@ export default {
       output: "#ccc",
     },
     add: true,
+    iter: 0,
   }),
   methods: {
     getColor(color, id) {
@@ -180,13 +194,12 @@ export default {
       this.myobj.pop();
       this.add = !this.add;
     },
-    handleIterClick(){
-      this.myobj.forEach(item => {
-        item.color = item.output
+    handleIterClick() {
+      this.myobj.forEach((item) => {
+        item.color = item.output;
       });
-      console.log(this.myobj[0].color);
-      console.log(this.myobj[1].color);
-    }
+      this.iter = this.iter + 1;
+    },
   },
 };
 </script>
@@ -250,7 +263,7 @@ export default {
   margin: 1rem auto;
   position: relative;
 }
-.iter-btn{
+.iter-btn {
   position: absolute;
   right: 5px;
   top: 5px;

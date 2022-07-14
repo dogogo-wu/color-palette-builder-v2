@@ -1,21 +1,28 @@
 <template>
   <div class="picker-container">
     <div class="text-h6 mb-3">Pick base color !</div>
-    <input class="mypicker" type="color" v-model="mycolor"  />
+    <input :data-myiter="iter" class="mypicker" type="color" v-model="mycolor"  />
     <v-text-field v-model="mycolor" class="picker-text"></v-text-field>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["color", "id"],
+  props: ["color", "id", "iter"],
   data() {
     return {
       mycolor: this.color,
+      myiter: this.iter
     };
   },
   updated() {
-    this.$emit("color", this.mycolor, this.id);
+    if (this.myiter !== this.iter) {
+      this.mycolor= this.color
+      this.myiter =this.iter
+    }
+    else{
+      this.$emit("color", this.mycolor, this.id);
+    }
   },
 };
 </script>
