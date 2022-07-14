@@ -1,6 +1,6 @@
 <template>
   <div class="picker-container">
-    <div class="text-h6 mb-3">Pick a base color!</div>
+    <div class="text-h6 mb-3">Pick base color !</div>
     <input
       class="mypicker"
       type="color"
@@ -35,9 +35,11 @@ $cir-dia: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 28px 20px 16px ;
+  margin-top: 16px;
   border-radius: 1rem;
   border: 1px solid #ddd;
+  
 
   .picker-text {
     width: $cir-dia;

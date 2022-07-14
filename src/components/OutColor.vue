@@ -1,8 +1,7 @@
 <template>
-  <v-tooltip top>
+  <v-tooltip bottom>
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-      
         class="outcir"
         :style="{ background: bg }"
         @click="copyHex"

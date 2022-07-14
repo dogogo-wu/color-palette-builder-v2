@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <header
-      class="myheader mb-4 py-5"
+      class="myheader py-5"
       :class="$vuetify.theme.dark ? 'mydark' : 'mylight'"
     >
       <div class="text-h5 text-center font-weight-bold">
@@ -13,9 +13,9 @@
           inset
           label=""
           hide-details
-          class="ma-0"
+          class="btn-switch ma-0 pa-0"
         ></v-switch>
-        <v-icon>mdi-weather-night</v-icon>
+        <v-icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">mdi-weather-night</v-icon>
       </div>
     </header>
     <v-main>
@@ -29,9 +29,9 @@
             @color="getColor"
           />
         </div>
-        <div class="pt-4">
-          <div class="text-h6 text-center">Pick Colors</div>
-          <div class="text-center">(Lightness variation)</div>
+        <div class="pt-2">
+          <div class="text-h6 text-center">Lightness Variation</div>
+          <div class="text-center mb-2">(Click Colors)</div>
           <Palette
             v-for="item in myobj"
             :key="item.id"
@@ -41,7 +41,7 @@
           />
         </div>
 
-        <div class="d-flex justify-center">
+        <section class="out-sec">
           <div
             class="out-area pt-3 px-4"
             :class="$vuetify.theme.dark ? 'border-dark' : 'border-light'"
@@ -55,11 +55,12 @@
               />
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="pt-4">
-          <div class="text-h6 text-center">Similar Random Colors</div>
-          <div class="hexcolor">
+        <div class="">
+          <div class="text-h6 text-center">Similar Colors</div>
+          <div class="text-center">(Randomly Generated)</div>
+          <div class="hexcolor pb-4">
             <RndHex
               v-for="item in myobj"
               :key="item.id"
@@ -73,7 +74,8 @@
     </v-main>
     <footer>
       <div class="myfooter" :class="$vuetify.theme.dark ? 'mydark' : 'mylight'">
-        Copyright © {{ new Date().getFullYear() }} Leon Wu. All rights reserved.
+        <p>Copyright © {{ new Date().getFullYear() }} Leon Wu.&ensp;</p>
+        <p>All rights reserved.</p>
       </div>
     </footer>
   </v-app>
@@ -94,14 +96,19 @@ export default {
     myobj: [
       {
         id: 1,
-        color: "#5900ff",
+        color: "#9900ff",
         output: "#ccc",
       },
       {
         id: 2,
-        color: "#ff7300",
+        color: "#ff9900",
         output: "#ccc",
       },
+      // {
+      //   id: 3,
+      //   color: "#55d3c6",
+      //   output: "#ccc",
+      // },
     ],
   }),
   methods: {
@@ -123,9 +130,17 @@ export default {
   position: absolute;
   margin: 0;
   right: 20px;
-  top: 20px;
+  top: 24px;
   display: flex;
   align-items: center;
+}
+@media (max-width:500px) {
+  .btn-switch{
+    display: none;
+  }
+  .switch-group{
+    right: 10px;
+  }
 }
 .mylight {
   background-color: #eee;
@@ -135,11 +150,19 @@ export default {
   background-color: #333;
   color: #eee;
 }
+.out-sec{
+  display: flex;
+  justify-content: center;
+  /* position: fixed;
+  right: 10px;
+  bottom: 20px; */
+}
 .out-area {
   border-radius: 1rem;
   border: 2px solid;
   display: inline-block;
   margin: 1rem auto;
+  
 }
 .border-light {
   border-color: #ccc;
@@ -148,15 +171,25 @@ export default {
   border-color: #777;
 }
 .output {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .hexcolor {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  
 }
 .myfooter {
   text-align: center;
   padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.myfooter p{
+  margin: 0;
 }
 </style>>
 

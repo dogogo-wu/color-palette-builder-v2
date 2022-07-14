@@ -5,6 +5,7 @@
       :key="index"
       class="singlePalette"
       :style="{ background: item }"
+      v-ripple
       @click="sendOut(item, id)"
     ></div>
   </div>
@@ -25,7 +26,7 @@ export default {
     },
     genLightAry(color) {
       var [h, s, v] = hexToHsl(color);
-      var ary = []
+      var ary = [];
       const num = 10;
       const halfNum = num / 2;
 
@@ -60,12 +61,17 @@ $palette-dia: 80px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 1rem 0;
+  padding-bottom: 8px;
+  @media (max-width: 830px) {
+    max-width: 300px;
+    margin: auto;
+  }
 }
 .singlePalette {
   width: $palette-dia;
   height: $palette-dia;
   border-radius: $palette-dia;
   cursor: pointer;
+  margin-top: 8px;
 }
 </style>
