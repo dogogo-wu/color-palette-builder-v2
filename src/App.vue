@@ -130,6 +130,7 @@
               :id="item.id"
               :color="item.color"
               @result="getResult"
+              :iter="iter"
             />
           </div>
         </div>
@@ -189,7 +190,7 @@ export default {
     },
     handleDelClick() {
       this.tmpobj.color = this.myobj[2].color;
-      this.tmpobj.ouput = this.myobj[2].ouput;
+      this.tmpobj.output = this.myobj[2].output;
 
       this.myobj.pop();
       this.add = !this.add;

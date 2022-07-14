@@ -9,6 +9,7 @@
           transform: `translate(-50%, -50%) translateX(${posAry[index].x}px) translateY(${posAry[index].y}px)`,
         }"
         @click="sendOut(item, id)"
+        :data-myiter="iter"
       >
         <Hexagon :size="90" :border-size="0" :backgroundColor="item" v-ripple />
       </div>
@@ -24,7 +25,7 @@ import hslToHex from "hsl-to-hex";
 const pi = 3.14159;
 
 export default {
-  props: ["id", "color"],
+  props: ["id", "color","iter"],
   components: { Hexagon },
   data() {
     return {
@@ -39,7 +40,7 @@ export default {
       const range = upper - lower;
       return lower + Math.random() * range;
     },
-    genRndHex(color) {
+    genRndHex(color, inIter) {
       var [h, s, v] = hexToHsl(color);
       var hexAry = [];
       hexAry.push(hslToHex(h, s, v));
@@ -82,7 +83,7 @@ export default {
   },
   computed: {
     hexAry() {
-      return this.genRndHex(this.color);
+      return this.genRndHex(this.color, this.iter);
     },
   },
   created() {
