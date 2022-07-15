@@ -79,13 +79,15 @@
         <div class="pt-2">
           <div class="text-h6 text-center">Lightness Variation</div>
           <div class="text-center mb-2">(Click Colors)</div>
-          <Palette
-            v-for="item in myobj"
-            :key="item.id"
-            :id="item.id"
-            :color="item.color"
-            @result="getResult"
-          />
+          <div class="palette-group">
+            <Palette
+              v-for="item in myobj"
+              :key="item.id"
+              :id="item.id"
+              :color="item.color"
+              @result="getResult"
+            />
+          </div>
         </div>
 
         <section class="out-sec">
@@ -206,6 +208,14 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
 .myheader {
   position: relative;
 }
@@ -249,6 +259,14 @@ export default {
 .mydark {
   background-color: #333;
   color: #eee;
+}
+
+@media (max-width: 830px) {
+  .palette-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }
 .out-sec {
   display: flex;
