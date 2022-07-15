@@ -28,22 +28,48 @@ export default {
       var ary = [];
       const num = 10;
       const halfNum = num / 2;
+      var upperStepSum =0
+      var lowerStepSum =0
 
-      const stepUp = (100 - v) / halfNum;
-      const stepDown = (v - 0) / halfNum;
+      // // ------------ if want even step for single side ------------
+      // const stepUp = (100 - v) / halfNum;
+      // const stepDown = (v - 0) / halfNum;
 
-      const evenStep = stepUp < stepDown ? stepUp : stepDown;
+      // // ------------ if want even step for both side ------------
+      // const evenStep = stepUp < stepDown ? stepUp : stepDown;
+
+      // ------------ if want golden step for single side ------------
+      const upperStepAry = this.getGoldenStep((100 - v), halfNum)
+      const lowerStepAry = this.getGoldenStep((v - 0), halfNum)
 
       // center pt and upward
       for (let i = 0; i < halfNum; i++) {
-        ary.push("#" + convert.hsl.hex(h, s, v + evenStep * i).toLowerCase());
+        // ary.push("#" + convert.hsl.hex(h, s, v + evenStep * i).toLowerCase());
+        ary.push("#" + convert.hsl.hex(h, s, v + upperStepSum).toLowerCase());
+        upperStepSum += upperStepAry[i]
       }
       // reverse ary
       ary.reverse();
       // below center pt and downward
       for (let i = 1; i < halfNum; i++) {
-        ary.push("#" + convert.hsl.hex(h, s, v - evenStep * i).toLowerCase());
+        // ary.push("#" + convert.hsl.hex(h, s, v - evenStep * i).toLowerCase());
+        lowerStepSum += lowerStepAry[i-1]
+        ary.push("#" + convert.hsl.hex(h, s, v - lowerStepSum).toLowerCase());
       }
+      return ary;
+    },
+    getGoldenStep(length, seg) {
+      const ratio = 0.618;
+      const ratio_sq = ratio * ratio;
+      var ary = [];
+
+      var avgstep = length / seg;
+
+      ary.push(avgstep * ratio_sq);
+      ary.push(avgstep * ratio);
+      ary.push(avgstep);
+      ary.push(avgstep * (2 - ratio));
+      ary.push(avgstep * (2 - ratio_sq));
 
       return ary;
     },
