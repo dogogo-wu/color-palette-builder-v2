@@ -4,7 +4,7 @@
       class="myheader py-5"
       :class="$vuetify.theme.dark ? 'mydark' : 'mylight'"
     >
-      <div class="text-h5 text-center font-weight-bold">
+      <div class="text-sm-h5 text-h6 text-center font-weight-bold">
         Color Palette for Design
       </div>
       <div class="switch-group">
@@ -65,7 +65,7 @@
       </div>
     </header>
     <v-main>
-      <v-container>
+      <v-container class="mytopcon">
         <div class="d-flex justify-space-around flex-wrap">
           <Picker
             v-for="item in myobj"
@@ -216,6 +216,20 @@ body {
   padding: 0px;
   overflow-x: hidden;
 }
+@media (max-width: 930px) {
+  .mytopcon {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+@media (max-width: 1264px) {
+  .mytopcon {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+
 .myheader {
   position: relative;
 }
