@@ -163,18 +163,18 @@ export default {
       {
         id: 1,
         color: "#9900ff",
-        output: "#ccc",
+        output: "#cccccc",
       },
       {
         id: 2,
         color: "#ff9900",
-        output: "#ccc",
+        output: "#cccccc",
       },
     ],
     tmpobj: {
       id: 3,
       color: "#55d3c6",
-      output: "#ccc",
+      output: "#cccccc",
     },
     add: true,
     iter: 0,

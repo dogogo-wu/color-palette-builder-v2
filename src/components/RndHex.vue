@@ -19,13 +19,12 @@
 
 <script>
 import Hexagon from "@coddicat/vue-hexagon";
-import hexToHsl from "hex-to-hsl";
-import hslToHex from "hsl-to-hex";
+import convert from "color-convert";
 
 const pi = 3.14159;
 
 export default {
-  props: ["id", "color","iter"],
+  props: ["id", "color", "iter"],
   components: { Hexagon },
   data() {
     return {
@@ -40,16 +39,30 @@ export default {
       const range = upper - lower;
       return lower + Math.random() * range;
     },
+    reverseOverflow(lower, upper, value) {
+      if (value < lower) {
+        return lower + (lower - value);
+      } else if (value > upper) {
+        return upper - (value - upper);
+      } else {
+        return value;
+      }
+    },
     genRndHex(color, inIter) {
-      var [h, s, v] = hexToHsl(color);
-      var hexAry = [];
-      hexAry.push(hslToHex(h, s, v));
-      for (let i = 0; i < 6; i++) {
-        const new_h = h + this.gneRndNum(-10, 10);
-        const new_s = s + this.gneRndNum(-20, 20);
-        const new_v = v + this.gneRndNum(-20, 20);
+      var [h, s, v] = convert.hex.hsl(color);
 
-        hexAry.push(hslToHex(new_h, new_s, new_v));
+      var hexAry = [];
+      hexAry.push("#" + convert.hsl.hex(h, s, v).toLowerCase());
+      for (let i = 0; i < 6; i++) {
+        var new_h = h + this.gneRndNum(-10, 10);
+        var new_s = s + this.gneRndNum(-20, 20);
+        var new_v = v + this.gneRndNum(-20, 20);
+
+        new_h = this.reverseOverflow(0, 359, new_h)
+        new_s = this.reverseOverflow(0, 100, new_s)
+        new_v = this.reverseOverflow(0, 100, new_v)
+
+        hexAry.push("#" + convert.hsl.hex(new_h, new_s, new_v).toLowerCase());
       }
       return hexAry;
     },
@@ -108,7 +121,8 @@ export default {
   display: inline-block;
   position: absolute;
 }
-.hex-comp, .hex-comp div{
+.hex-comp,
+.hex-comp div {
   border-radius: 90px;
 }
 </style>

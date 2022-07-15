@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import hexToHsl from "hex-to-hsl";
-import hslToHex from "hsl-to-hex";
+import convert from "color-convert";
 
 export default {
   props: ["id", "color"],
@@ -25,7 +24,7 @@ export default {
       this.$emit("result", outcolor, outid);
     },
     genLightAry(color) {
-      var [h, s, v] = hexToHsl(color);
+      var [h, s, v] = convert.hex.hsl(color);
       var ary = [];
       const num = 10;
       const halfNum = num / 2;
@@ -33,15 +32,17 @@ export default {
       const stepUp = (100 - v) / halfNum;
       const stepDown = (v - 0) / halfNum;
 
+      const evenStep = stepUp < stepDown ? stepUp : stepDown;
+
       // center pt and upward
       for (let i = 0; i < halfNum; i++) {
-        ary.push(hslToHex(h, s, v + stepUp * i));
+        ary.push("#" + convert.hsl.hex(h, s, v + evenStep * i).toLowerCase());
       }
       // reverse ary
       ary.reverse();
       // below center pt and downward
       for (let i = 1; i < halfNum; i++) {
-        ary.push(hslToHex(h, s, v - stepDown * i));
+        ary.push("#" + convert.hsl.hex(h, s, v - evenStep * i).toLowerCase());
       }
 
       return ary;

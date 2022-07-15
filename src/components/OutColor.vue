@@ -4,7 +4,6 @@
       <v-btn
         class="outcir"
         :style="{ background: bg }"
-        @click="copyHex"
         v-bind="attrs"
         v-on="on"
         fab
@@ -12,6 +11,7 @@
         plain
         width="80px"
         height="80px"
+        :data-clipboard-text="bg"
       ></v-btn>
     </template>
     <span>Copy Color (HEX)</span>
@@ -19,12 +19,12 @@
 </template>
 
 <script>
+import Clipboard from 'clipboard';
+
 export default {
   props: ["bg"],
-  methods: {
-    copyHex() {
-      navigator.clipboard.writeText(this.bg);
-    },
+  mounted () {
+    new Clipboard( ".outcir" );
   },
 };
 </script>
